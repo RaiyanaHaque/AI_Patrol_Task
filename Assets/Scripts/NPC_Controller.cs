@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class NPC_Controller : MonoBehaviour {
+public class NPC_Controller : MonoBehaviour
+{
 
     //true or false the patrol waits at a node
     [SerializeField]
@@ -31,19 +32,20 @@ public class NPC_Controller : MonoBehaviour {
     bool _patrolForward;
     float _waitTimer;
 
-   // [SerializeField]
-//public float distance;
-   // public GameObject deathEffect;
-    
+    // [SerializeField]
+    //public float distance;
+    // public GameObject deathEffect;
+
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
 
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
-        if(_navMeshAgent == null)
+        if (_navMeshAgent == null)
         {
-            Debug.Log("The navmesh agent in not attached to the object" + gameObject.name); 
+            Debug.Log("The navmesh agent in not attached to the object" + gameObject.name);
         }
 
         else
@@ -59,20 +61,20 @@ public class NPC_Controller : MonoBehaviour {
                 Debug.Log("Needs more points");
             }
         }
-	}
+    }
 
     public void Update()
     {
         //check if close to destination
         if (_travelling && _navMeshAgent.remainingDistance <= 1.0f)
         {
-            _travelling = false; 
+            _travelling = false;
 
             //if going to wait then wait
             if (_patrolWaiting)
             {
                 _waiting = true;
-                _waitTimer = 0f; 
+                _waitTimer = 0f;
             }
 
             else
@@ -83,7 +85,7 @@ public class NPC_Controller : MonoBehaviour {
         }
 
         //insted if waiting
-        if(_waiting)
+        if (_waiting)
         {
             _waitTimer += Time.deltaTime;
             if (_waitTimer >= _totalWaitTime)
@@ -96,32 +98,32 @@ public class NPC_Controller : MonoBehaviour {
 
         }
 
-       /* Ray ray = new Ray(transform.position, transform.forward);
-        RaycastHit hitInfo;
+        /* Ray ray = new Ray(transform.position, transform.forward);
+         RaycastHit hitInfo;
 
-        if (Physics.Raycast(ray, out hitInfo, distance))
-        {
-            Debug.DrawLine(ray.origin, hitInfo.point, Color.red);
+         if (Physics.Raycast(ray, out hitInfo, distance))
+         {
+             Debug.DrawLine(ray.origin, hitInfo.point, Color.red);
 
-            if (hitInfo.collider.CompareTag("Player"))
-            {
-                _navMeshAgent.enabled = !_navMeshAgent;
-                //Instantiate(deathEffect, transform.position, Quaternion.identity);
-                Destroy(hitInfo.collider.gameObject); 
-                //not detroying player most likely it is in the state of patrolling
+             if (hitInfo.collider.CompareTag("Player"))
+             {
+                 _navMeshAgent.enabled = !_navMeshAgent;
+                 //Instantiate(deathEffect, transform.position, Quaternion.identity);
+                 Destroy(hitInfo.collider.gameObject); 
+                 //not detroying player most likely it is in the state of patrolling
 
-            }
-        }
-        else
-        {
-            Debug.DrawLine(ray.origin, ray.origin + ray.direction * distance, Color.green);
-        } */
+             }
+         }
+         else
+         {
+             Debug.DrawLine(ray.origin, ray.origin + ray.direction * distance, Color.green);
+         } */
 
     }
 
     private void SetDestination()
     {
-        if(_patrolPoints!= null)
+        if (_patrolPoints != null)
         {
             Vector3 targetVector = _patrolPoints[_currentPatrolIndex].transform.position;
             _navMeshAgent.SetDestination(targetVector);
@@ -133,10 +135,10 @@ public class NPC_Controller : MonoBehaviour {
     /// Select a new patrol point in the list
     /// also with a small probability allows for us to move forward or backwards
     /// </summary>
-    
+
     private void ChangePatrolPoint()
     {
-        if(UnityEngine.Random.Range(0f, 1f) <= _switchProbability)
+        if (UnityEngine.Random.Range(0f, 1f) <= _switchProbability)
         {
             _patrolForward = !_patrolForward;
         }
@@ -157,7 +159,7 @@ public class NPC_Controller : MonoBehaviour {
 
         else
         {
-            if(--_currentPatrolIndex < 0) //decrement -- then check if its less than 0
+            if (--_currentPatrolIndex < 0) //decrement -- then check if its less than 0
             {
                 _currentPatrolIndex = _patrolPoints.Count - 1;
             }
