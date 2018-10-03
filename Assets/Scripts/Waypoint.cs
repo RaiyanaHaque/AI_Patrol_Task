@@ -9,7 +9,7 @@ public class Waypoint : MonoBehaviour {
 
     private void OnDrawGizmos() //drawGizmos method
     {
-        Gizmos.color = Color.red; //sets the color
+        Gizmos.color = Color.green; //sets the color
         Gizmos.DrawWireSphere(transform.position, debugDrawRadius); //creates a sphere wire where the point is placed + previous size
     }
 }

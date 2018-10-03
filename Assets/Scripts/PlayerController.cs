@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        moveSpeed = 4f;
+        moveSpeed = 3.5f;
     
 	}
 	

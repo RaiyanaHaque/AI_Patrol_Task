@@ -32,6 +32,8 @@ public class NPC_Controller : MonoBehaviour
     bool _patrolForward;
     float _waitTimer;
 
+    
+
     // [SerializeField]
     //public float distance;
     // public GameObject deathEffect;

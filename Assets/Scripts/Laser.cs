@@ -33,7 +33,7 @@ public class Laser : MonoBehaviour {
                 // ignoring the attack
                 // turn off other components so that its not ignored
                 GetComponent<NPC_Controller>().enabled = false;
-                GetComponent<NavMeshAgent>().enabled = false;
+                //GetComponent<NavMeshAgent>().enabled = true;
                 // ^^ should be a much more efficient way
                 Instantiate(deathEffect, transform.position, Quaternion.identity);
                 Destroy(hitInfo.collider.gameObject);
