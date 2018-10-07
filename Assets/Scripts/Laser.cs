@@ -2,17 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Laser : MonoBehaviour {
 
     public float distance;
     public GameObject deathEffect;
-   
+
+    public LineRenderer lineOfSight;
+    public Gradient redColour;
+    public Gradient greenColour;
+
+    public Countdown countdownScript;
 
     // Use this for initialization
     void Start()
     {
-       
+        countdownScript = GameObject.Find("TimeController").GetComponent<Countdown>();
     }
 
     // Update is called once per frame
@@ -26,24 +33,25 @@ public class Laser : MonoBehaviour {
         if (Physics.Raycast(ray, out hitInfo, distance))
         {
             Debug.DrawLine(ray.origin, hitInfo.point, Color.red);
+            lineOfSight.SetPosition(1, hitInfo.point);
+            lineOfSight.colorGradient = redColour;
 
             if (hitInfo.collider.CompareTag("Player"))
             {
-                // the laser does not work because the cube keeps patrolling
-                // ignoring the attack
-                // turn off other components so that its not ignored
+
                 GetComponent<NPC_Controller>().enabled = false;
-                //GetComponent<NavMeshAgent>().enabled = true;
-                // ^^ should be a much more efficient way
                 Instantiate(deathEffect, transform.position, Quaternion.identity);
                 Destroy(hitInfo.collider.gameObject);
-
+                countdownScript.PlayerDeath();
             }
         }
         else
         {
             Debug.DrawLine(ray.origin, ray.origin + ray.direction * distance, Color.green);
+            lineOfSight.SetPosition(1, ray.origin + ray.direction * distance);
+            lineOfSight.colorGradient = greenColour;
         }
 
+        lineOfSight.SetPosition(0, transform.position);
     }
 }

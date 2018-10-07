@@ -15,6 +15,8 @@ public class Countdown : MonoBehaviour
     private bool _doOnce = false;
 
     public GameObject _taskPanel;
+    public GameObject _deathPanel;
+
 
 
     private void Start()
@@ -39,7 +41,7 @@ public class Countdown : MonoBehaviour
             _uiText.text = "0.00";
             _timer = 0.0f;
             GameOver();
-        }
+        } 
     }
 
     public void ResetBtn()
@@ -48,13 +50,13 @@ public class Countdown : MonoBehaviour
         _timer = _mainTimer;
         _canCount = true;
         _doOnce = false;
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
 
     }
 
     public void ExitBtn()
     {
-       
+        Application.Quit();
     }
 
     public void Pause()
@@ -65,12 +67,18 @@ public class Countdown : MonoBehaviour
     public void PlayGameBtn()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     public void GameOver()
     {
         Pause();
         _taskPanel.SetActive(true);
+    }
+
+    public void PlayerDeath ()
+    {
+        Pause();
+        _deathPanel.SetActive(true);
     }
 }
